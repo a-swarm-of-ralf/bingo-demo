@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <v-app-bar absolute dense color="primary">
+              <v-toolbar-title>Music Bingo</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn icon to="spotify-login"><v-icon>fab fa-spotify</v-icon></v-btn>
+              <v-btn icon to="pepper-connect"><v-icon>fas fa-robot</v-icon></v-btn>
+              <v-btn icon to="game-select"><v-icon>fas fa-gamepad</v-icon></v-btn>
+            </v-app-bar>
+            <v-content>
+              <v-container
+                class="fill-height"
+                fluid
+              >
+                <v-row
+                  align="center"
+                  justify="center"
+                >
+                  <v-col
+                    cols="12"
+                    sm="8"
+                    md="4"
+                  >
+                    <router-view></router-view>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-content>
+          </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <script src="./main/javascript/lib/lodash.js"></script>
+    <script src="./main/javascript/lib/eventemitter2.js"></script>
+    <script nomodule src="https://unpkg.com/browser-es-module-loader/dist/babel-browser-build.js"></script>
+    <script nomodule src="https://unpkg.com/browser-es-module-loader"></script>
+    <script type="module" src="./main/javascript/app.js"></script>
+
+</body>
+
+</html>
