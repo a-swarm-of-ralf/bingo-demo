@@ -1,6 +1,6 @@
-import injectScript from '../../pepper-sdk/injectScript.js'
-import connectPepper from '../../pepper-sdk/connect.js'
-import Pepper from '../../pepper-sdk/pepper.js'
+import injectScript from '../../api/robot/pepper/injectScript.js'
+import connectPepper from '../../api/robot/pepper/connect.js/index.js'
+import Pepper from '../../api/robot/pepper/pepper.js'
 
 
 let client = null;
