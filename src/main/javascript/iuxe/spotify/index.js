@@ -75,8 +75,18 @@ export default {
             .then(commit)
     },
 
-    me () {
-        return new UserHandler().me()
+    me (access_token) {
+        const instance = axios.create({
+            baseURL: 'https://api.spotify.com/v1/',
+            timeout: 5000,
+            headers: {'Authorization': 'Bearer ' + access_token }
+        });
+        return instance.get('/me')
+            .then(function (response) {
+                console.log(`[Spotify] /me called with status ${response.status} ${response.statusText}`);
+                return response.data;
+            });
+    
     }
 }
 

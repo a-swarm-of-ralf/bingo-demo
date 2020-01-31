@@ -1,82 +1,26 @@
-import model from '../iuxe/model/index.js'
-
 export default {
+
     data: () => ({
-        token: '',
-        tokenType: '',
-        expiresInStr: '',
-        expiresIn: 0
-      }),
+
+    }),
+
     methods: {
+
+        ...Vuex.mapActions([ 'authorizedSpotify' ]),
+
         extractParams(path) {
             const params = _(path).split('&').map(p => p.split('=')).fromPairs().value()
-            console.log(JSON.stringify(params))
+            // console.log(JSON.stringify(params))
             return params
         }
     },
+
     created () {
         console.log(`Redirected from spotify with path: ${this.$route.path}`)
         const params = this.extractParams(this.$route.path)
-        this.token = params["/access_token"]
-        this.tokenType = params["token_type"]
-        this.expiresInStr = params["expires_in"]
-        this.expiresIn = parseInt(params["expires_in"])
-
-        model.player.authorizationToken(this.token, this.expiresIn)
-
-        /*
-
-        model.player.authorize(this.token, this.tokenType, this.expiresIn)
-            .then(model.player.me)
-            .then(user => {
-                console.log('user:', user)
-                user.playlists().then((playlistCollection) => {
-
-                    console.log(`Iterate Playlists`)
-                    _(playlistCollection).forEach((e) => {
-                        console.log(`Playlist "${e.name}"`)
-                    })
-                    
-                    console.log(`Search for playlist named "bingo"`)
-                    const playlist = _.find(playlistCollection, (playlist) => playlist.name === "bingo")
-                    
-                    console.log(`Playlist named "bingo" was`, playlist)
-                    console.log(`Playlist name "${playlist.name}"`)
-                    console.log(`Playlist uri "${playlist.uri}"`)
-                    console.log(`Playlist tracks "${playlist.tracks}"`)
-
-                    console.log(`Iterating over playlist tracks`)
-                    playlist.tracks.then(tracks => {
-                        console.log(`Track resolved`, tracks)
-                        _(tracks).forEach((track, i) => {
-                            console.log(`Track ${i}: "${track.name}" by "${track.artists[0].name}"`, track)
-                        })
-                    });
-                    
-                    /*
-
-                    console.log('Playlists', playlistCollection)
-                    let PlaylistEntity = playlistCollection.first();
-                    console.log('First Entity', PlaylistEntity)
-            
-                    PlaylistEntity.contains(['1258448899']).then(res => {
-                        console.log(res)
-                    });
-            
-                    PlaylistEntity.tracks.then(tracksCollection => {
-                        let ArtistEntity = tracksCollection[0].artists[0];
-                        ArtistEntity.albums().then(albumsCollection => {
-                            console.log(albumsCollection);  //Wooo!!!
-                        });
-                    });
-
-                    
-                });
-                
-            })
-            */
-
+        this.authorizedSpotify(params["/access_token"], params["token_type"], parseInt(params["expires_in"]))  
     },
+
     template: `
     <v-card class="elevation-12">
         <v-toolbar color="primary" dark flat>
@@ -99,19 +43,15 @@ export default {
                 requests to during the authorization process.
             </p>
             <p>
-                For now the token we received is "{{token}}" and this will be valid 
-                for {{expiresInStr}} minutes.
-            </p>
-            <p>
                 Next we will need a host for our game. We will try to use a Pepper robot for this. If you 
                 press "Next" below we will try to connect to the Pepper.
             </p>
         </v-card-text>
         <v-card-actions>
-                <v-spacer />
-                <v-btn color="secondary" to="spotify-login">Back to Spotify Login</v-btn>
-                <v-btn color="primary" to="pepper-connect">Next</v-btn>
-              </v-card-actions>
+            <v-spacer />
+            <v-btn color="secondary" to="spotify-login">Back to Spotify Login</v-btn>
+            <v-btn color="primary" to="pepper-connect">Next</v-btn>
+        </v-card-actions>
     </v-card>
     `
 }

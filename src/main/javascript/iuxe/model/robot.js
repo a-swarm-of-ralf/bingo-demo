@@ -1,6 +1,8 @@
 import Pepper from '../pepper/index.js'
 import Mock from '../pepper/mock.js'
 
+const emitter = new EventEmitter2();
+
 let client = Pepper
 
 export default class Robot {
@@ -24,6 +26,7 @@ export default class Robot {
     }
 
     say (text) {
+        emitter.emit('say', text)
         return client.say(text)
     }
 
@@ -41,5 +44,9 @@ export default class Robot {
                 this.say("Niet schoppen, als u blieft.")
             }  
         })
+    }
+
+    on (event, callback) {
+        return emitter.on(event, callback)
     }
 }

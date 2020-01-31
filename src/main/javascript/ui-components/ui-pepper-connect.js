@@ -2,6 +2,7 @@ import model from '../iuxe/model/index.js'
 
 
 export default {
+
     data: () => ({
         host: '192.168.188.28',
         hostHistory: [ 'pepper.local', "192.168.188.28" ],
@@ -13,11 +14,27 @@ export default {
         connectionBusy: false,
         connectionSuccess: false,
         connectionError: false,
-      }),
-    methods: {
-        load () {
+    }),
 
+    computed: {
+
+        ipAddressHistory: {
+            get () {
+                return  this.$store.state.robot.ipAddressHistory
+            }
         },
+
+        ipAddress: {
+            get () {
+                return this.$store.state.robot.ipAddress
+            },
+            set (value) {
+                this.$store.commit('updateRobotIpAddress', value)
+            }
+        }
+    },
+
+    methods: {
         inject () {
             console.log(`[UI-Pepper-Setup] Injecting Qi Script...`);
             this.injectionUnknown = false;
@@ -59,6 +76,7 @@ export default {
                             this.connectionError = false;
 
                             model.robot.reactToTouch()
+                            setTimeout(() => this.$router.push({ name: 'app-load' }) , 2000);
                         })
                         .catch(err => {
                             console.log(`[UI-Pepper-Setup] Error connection to pepper`, err);
@@ -79,7 +97,8 @@ export default {
 
         },
         mock () {
-
+            model.robot.mock()
+            this.$router.push('/agent-load')
         }
     },
     created () {
@@ -91,11 +110,19 @@ export default {
             <v-toolbar-title><v-icon x-large>fas fa-robot</v-icon> Pepper Setup</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
+                <h2>Welcome,</h2>
                 <p>
-                    Enter peppers ipaddress in the box below and press connect to connect to pepper.
+                    Next we'll need to connect to a pepper robot as the physical body of our ePal. This 
+                    conenction consist of two parts. First the script need to be loaded and secondly we
+                    need to establish a connection. To perform these steps we'll need the ip address of
+                    our robot.
+                </p>
+                <p>
+                    Pepper will say her ip address when you press on the button underneath the tablet. 
+                    Please fill in this address in the box below. 
                 </p>
                 <v-form>
-                <v-combobox v-model="host" :items="hostHistory" label="Pepper IP Address"></v-combobox>
+                <v-combobox v-model="ipAddress" :items="ipAddressHistory" label="Pepper IP Address"></v-combobox>
                 <v-simple-table>
                     <template v-slot:default>
                     <tbody>
@@ -124,7 +151,7 @@ export default {
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="secondary" @click="mock">Use Pepper Stub</v-btn>
+                <v-btn color="secondary" @click="mock">Use Mock Robot</v-btn>
                 <v-btn color="primary" @click="connect" >Connect Pepper</v-btn>
               </v-card-actions>
             </v-card>

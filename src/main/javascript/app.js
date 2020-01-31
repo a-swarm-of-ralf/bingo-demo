@@ -1,35 +1,25 @@
-// import injectScript from './injectScript.js'
-// import settings from './iuxe/ontology/index.js'
-
+import uiPepperMock from './ui-components/ui-pepper-mock.js'
 import routes from './routes.js'
+import store from './store.js'
+
+
+Vue.component('ui-pepper-mock', uiPepperMock)
 
 const router = new VueRouter({ routes })
 
-
 router.beforeEach((to, from, next) => {
-    console.log(`Route changing`);
-    if (from) {
-        console.log(`from route   name: '${from.name}'`);
-        console.log(`from route   path: '${from.path}'`);
-        console.log(`from route   hash: '${from.hash}'`);
-        console.log(`from route params: '${JSON.stringify(from.params)}'`);
-        console.log(`from route  query: '${JSON.stringify(from.query)}'`);
+    console.log(`Route changing from route ${from.path} to route ${to.path}`);
+    if (to.path === '/') {
+        next('/spotify-login')
+    } else {
+        next()
     }
-
-    if (to) {
-        console.log(`to route   name: '${to.name}'`);
-        console.log(`to route   path: '${to.path}'`);
-        console.log(`to route   hash: '${to.hash}'`);
-        console.log(`to route params: '${JSON.stringify(to.params)}'`);
-        console.log(`to route  query: '${JSON.stringify(to.query)}'`);
-    }
-
-    next()
 })
 
 export default new Vue({
     el: '#app',
     router,
+    store,
     vuetify: new Vuetify({
         theme: {
             dark: true,
