@@ -7,13 +7,19 @@ const emitter = new EventEmitter2();
 
 export default {
 
+    beforeLoading () {
+    },
+    
     /**
-     * I listen for events, without activating the event cycle.
+     * I listen for events, without activating the event cycle. Use this 
+     * for "meta" events like 'connected' and 'injected'. For all other
+     * events use subscribe. 
+     * 
      * @param {*} event 
      * @param {*} callback 
      */
-    on(event, callback) {
-
+    on(...args) {
+        emitter.on(...args);
     },
 
     connect ( ipAddress ) {

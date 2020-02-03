@@ -18,13 +18,15 @@ export default {
 
     computed: {
 
-        ipAddressHistory: {
-            get () {
-                return  this.$store.state.robot.ipAddressHistory
-            }
-        },
+        ...Vuex.mapGetters([ 
+            'RobotIpAddressHistory', 
+            'RobotInjected', 
+            'RobotInjectionState',
+            'RobotConnected', 
+            'RobotConnectionState',
+        ]),
 
-        ipAddress: {
+        RobotIpAddress: {
             get () {
                 return this.$store.state.robot.ipAddress
             },
@@ -35,71 +37,40 @@ export default {
     },
 
     methods: {
-        inject () {
-            console.log(`[UI-Pepper-Setup] Injecting Qi Script...`);
-            this.injectionUnknown = false;
-            this.injectionBusy = true;
-            this.injectionSuccess = false;
-            this.injectionError = false;
-            return model.robot.inject(this.host)
-                .then(() => {
-                    console.log(`[UI-Pepper-Setup] Injecting qi script complete`);
-                    this.injectionUnknown = false;
-                    this.injectionBusy = false;
-                    this.injectionSuccess = true;
-                    this.injectionError = false;    
-                })
-                .catch(err => {
-                    console.log(`[UI-Pepper-Setup] Error injecting qi script`, err);
-                    this.injectionUnknown = false;
-                    this.injectionBusy = false;
-                    this.injectionSuccess = false;
-                    this.injectionError = true;
-                })
-        },
+
+        ...Vuex.mapActions([ 
+            'connectPepperRobot', 
+            'connectMockRobot', 
+        ]),
+
         connect () {
-            console.log(`[UI-Pepper-Setup] Injecting script and establishing connection...`);
-            this.inject().then(() => {
-                if (this.injectionSuccess){
-                    this.connectionUnknown = false;
-                    this.connectionBusy = true;
-                    this.connectionSuccess = false;
-                    this.connectionError = false; 
-
-                    console.log(`[UI-Pepper-Setup] Connecting to pepper`);
-                    model.robot.connect(this.host)
-                        .then(() => {
-                            console.log(`[UI-Pepper-Setup] Connection established`);
-                            this.connectionUnknown = false;
-                            this.connectionBusy = false;
-                            this.connectionSuccess = true;
-                            this.connectionError = false;
-
-                            model.robot.reactToTouch()
-                            setTimeout(() => this.$router.push({ name: 'app-load' }) , 2000);
-                        })
-                        .catch(err => {
-                            console.log(`[UI-Pepper-Setup] Error connection to pepper`, err);
-                            this.connectionUnknown = false;
-                            this.connectionBusy = false;
-                            this.connectionSuccess = false;
-                            this.connectionError = true;
-                        })
-                } else {
-                    this.connectionUnknown = true;
-                    this.connectionBusy = false;
-                    this.connectionSuccess = false;
-                    this.connectionError = false;    
-                }
-            })
+            console.log(`[UI-Pepper-Connect] connecting to pepper.`)
+            this.$store.dispatch('connectPepperRobot').then(() => {
+                console.log(`[UI-Pepper-Connect] pepper connected.`)
+                setTimeout(() => {
+                    console.log(`[UI-Pepper-Connect] directing to /pepper-ready.`);
+                    this.$router.push('/pepper-ready')
+                }, 2000);
+            }).catch(err => {
+                console.log(`[UI-Pepper-Connect] error connecting pepper.`, err)
+                this.$store.dispatch('showMessage', { type: 'error', message:'Error while connecting to Pepper' });    
+            });
         },
-        save () {
 
-        },
         mock () {
-            model.robot.mock()
-            this.$router.push('/agent-load')
+            console.log(`[UI-Pepper-Connect] connecting to mock.`)
+            this.$store.dispatch('connectMockRobot').then(() => {
+                console.log(`[UI-Pepper-Connect] mock connected.`)
+                setTimeout(() => {
+                    console.log(`[UI-Pepper-Connect] directing to /pepper-ready.`);
+                    this.$router.push('/pepper-ready')
+                }, 1000);
+            }).catch(err => {
+                console.log(`[UI-Pepper-Connect] error connecting mock.`, err)
+                this.$store.dispatch('showMessage', { type: 'error', message:'Error while connecting to mock robot' });    
+            });
         }
+
     },
     created () {
         
@@ -122,26 +93,26 @@ export default {
                     Please fill in this address in the box below. 
                 </p>
                 <v-form>
-                <v-combobox v-model="ipAddress" :items="ipAddressHistory" label="Pepper IP Address"></v-combobox>
+                <v-combobox v-model="RobotIpAddress" :items="RobotIpAddressHistory" label="Pepper IP Address"></v-combobox>
                 <v-simple-table>
                     <template v-slot:default>
                     <tbody>
                         <tr>
                         <td>Qi script injection</td>
                         <td>
-                            <v-icon x-large v-if="injectionUnknown" >fas fa-question</v-icon>
-                            <v-progress-circular indeterminate v-if="injectionBusy"></v-progress-circular>
-                            <v-icon x-large color="primary" v-if="injectionSuccess">fas fa-check</v-icon>
-                            <v-icon x-large color="error" v-if="injectionError">fas fa-times</v-icon>
+                            <v-icon x-large v-if="RobotInjectionState === 0" >fas fa-question</v-icon>
+                            <v-progress-circular indeterminate v-if="RobotInjectionState === 1"></v-progress-circular>
+                            <v-icon x-large color="primary" v-if="RobotInjectionState === 3">fas fa-check</v-icon>
+                            <v-icon x-large color="error" v-if="RobotInjectionState === 2">fas fa-times</v-icon>
                         </td>
                         </tr>
                         <tr>
                         <td>Connecting to Pepper</td>
                         <td>
-                            <v-icon x-large v-if="connectionUnknown" >fas fa-question</v-icon>
-                            <v-progress-circular indeterminate v-if="connectionBusy"></v-progress-circular>
-                            <v-icon x-large color="primary" v-if="connectionSuccess">fas fa-check</v-icon>
-                            <v-icon x-large color="error" v-if="connectionError">fas fa-times</v-icon>
+                            <v-icon x-large v-if="RobotConnectionState === 0" >fas fa-question</v-icon>
+                            <v-progress-circular indeterminate v-if="RobotConnectionState === 1"></v-progress-circular>
+                            <v-icon x-large color="primary" v-if="RobotConnectionState === 3">fas fa-check</v-icon>
+                            <v-icon x-large color="error" v-if="RobotConnectionState === 2">fas fa-times</v-icon>
                         </td>
                         </tr>
                     </tbody>

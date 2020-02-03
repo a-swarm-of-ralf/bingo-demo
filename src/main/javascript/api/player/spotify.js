@@ -17,6 +17,14 @@ export default {
             console.log(`[Spotify] /me called with status ${res.status} ${res.statusText}`);
             return res.data;
         })
+    },
+
+    playlists () {
+        console.log(`[Spotify] playlists()...`);
+        return inst.get('/me/playlists').then(res => {
+            console.log(`[Spotify] /playlists called with status ${res.status} ${res.statusText}`);
+            return res.data;
+        })    
     }
 
 }

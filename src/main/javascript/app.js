@@ -1,11 +1,14 @@
 import uiPepperMock from './ui-components/ui-pepper-mock.js'
 import routes from './routes.js'
 import store from './store.js'
+import web from './api/web/web.js'
 
 
 Vue.component('ui-pepper-mock', uiPepperMock)
 
 const router = new VueRouter({ routes })
+
+web.setRouter(router);
 
 router.beforeEach((to, from, next) => {
     console.log(`Route changing from route ${from.path} to route ${to.path}`);

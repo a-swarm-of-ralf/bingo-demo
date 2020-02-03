@@ -5,13 +5,19 @@ export default {
     
     state: { 
         user: { display_name: '' },
+        
+        feedback: {
+            status: 0,
+            message: '',
+        },
 
         access_token: '',
         token_type: '',
         expires_in: 0,
         
         clientId: '3848d012f506457997ebde1cb526ebcf',
-        scope: 'user-follow-modify user-follow-read user-library-read user-top-read user-read-email user-read-private',
+        scope: 'user-follow-modify user-follow-read user-library-read user-top-read ' +
+            'user-read-email user-read-private playlist-read-private playlist-read-collaborative',
         redirect_uri: `http://localhost:8080/`,
     },
 
@@ -25,7 +31,19 @@ export default {
 
         userName (state) {
             return state.user.display_name
-        }
+        },
+
+        playerHasFeedback (state) {
+            return state.feedback.status != 0
+        },
+
+        playerFeedbackMessage (state) {
+            return state.feedback.message
+        },
+
+        playerFeedbackStatus (state) {
+            return state.feedback.status
+        },
     },
 
     mutations: {
@@ -73,6 +91,28 @@ export default {
                 console.log(`[StorePlayer] User ${user.display_name} logged in.`)
                 return commit('authorizedUser', user) 
             });
-        }
+        },
+
+        loadPlaylists ({commit, state}) {
+            return player.me().then(user => {
+                console.log(`[StorePlayer] User ${user.display_name} logged in.`)
+                return commit('authorizedUser', user) 
+            });    
+        },
+
+        PlayerCall({ dispatch }, method, args) {
+            console.log(`[StorePlayer] Calling ${method}()...`)
+            
+            if (!player[method]) {
+                console.log(`[StorePlayer] Error: Player has no method "${method}".`)
+                return Promise.reject({code: 'player-unknown-method', message: `Api "player" is has no method ${method}.` })
+            }
+
+            console.log(`[StorePlayer] Calling ${method}()...`)
+            return player[method](...args).then(result => {
+                console.log(`[StorePlayer] ${method}() called.`)
+                return dispatch('AgentEmitEvent', { name: `player.${method}`, args: [result] });
+            });    
+        },
     }
   }

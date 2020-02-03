@@ -2,25 +2,33 @@ import model from '../iuxe/model/index.js'
 
 
 export default {
-    data: () => ({
-        show: true,
-        snackbar: false,
-        snackbarText: 'Hello, I am Fake Pepper!'
-      }),
+    data: () => ({ 
+        sheetVisible: true
+    }),
 
     computed: {
-        ...Vuex.mapGetters([ 'userName' ])
+        ...Vuex.mapGetters([ 
+            'MessageVisible', 
+            'MessageType', 
+            'MessageText',
+            'RobotConnectionState',
+            'userName',
+            'RobotName',
+        ])
     },
 
     methods: {
+        hideMessage () {
+            this.$store.dispatch('hideMessage');
+        }
     },
-    created () {
-        this.snackbar = true    
-    },
+
+    created () { },
+
     template: `
-    <v-bottom-sheet v-model="show" hide-overlay inset persistent :retain-focus="false">
+    <v-bottom-sheet v-model="sheetVisible" hide-overlay inset persistent :retain-focus="false">
         <v-card class="d-flex flex-row" flat tile>
-            <v-card class="flex-grow-1" outlined tile>
+            <v-card class="flex-grow-1" outlined tile v-if="RobotConnectionState > 1">
                 <v-toolbar color="secondary" dark flat dense>
                     <v-icon small>fas fa-robot</v-icon>&nbsp;<v-toolbar-title>Robot</v-toolbar-title>
                 </v-toolbar>
@@ -44,6 +52,10 @@ export default {
                     </p>
                 </v-card-text>
             </v-card>
+            <v-snackbar v-model="MessageVisible" bottom right>
+                {{ MessageText }}
+                <v-btn color="primary" text @click="hideMessage">Close</v-btn>
+            </v-snackbar>
         </v-card>
     </v-bottom-sheet>
     `

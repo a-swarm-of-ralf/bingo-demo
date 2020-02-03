@@ -16,7 +16,7 @@ export default {
     },
     template: `
     <v-card class="elevation-12">
-        <v-toolbar color="primary" dark flat><v-toolbar-title>Bingo Main</v-toolbar-title></v-toolbar>
+        <v-toolbar color="primary" dark flat><v-toolbar-title>Select Playlist</v-toolbar-title></v-toolbar>
         <v-card-text>
             <p>
                 Bingo

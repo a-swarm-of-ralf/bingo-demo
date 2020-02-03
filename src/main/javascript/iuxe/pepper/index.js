@@ -1,5 +1,5 @@
 import injectScript from '../../api/robot/pepper/injectScript.js'
-import connectPepper from '../../api/robot/pepper/connect.js/index.js'
+import connectPepper from '../../api/robot/pepper/connect.js'
 import Pepper from '../../api/robot/pepper/pepper.js'
 
 
