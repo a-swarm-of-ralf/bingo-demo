@@ -17,7 +17,8 @@ export default {
         
         clientId: '3848d012f506457997ebde1cb526ebcf',
         scope: 'user-follow-modify user-follow-read user-library-read user-top-read ' +
-            'user-read-email user-read-private playlist-read-private playlist-read-collaborative',
+            'user-read-email user-read-private playlist-read-private playlist-read-collaborative ' +
+            'user-modify-playback-state user-read-playback-state user-read-recently-played user-read-currently-playing ',
         redirect_uri: `http://localhost:8080/`,
     },
 
