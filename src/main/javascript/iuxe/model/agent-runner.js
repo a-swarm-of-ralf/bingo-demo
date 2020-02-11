@@ -13,12 +13,20 @@ export default function (emitter, apis) {
 
     return {
         run (agent) {
+
+            apis.web.setAgent(agent.name);
+            apis.web.setEmitter(emitter);
+
             const init = Initialize(agent, actions);
             const update = Update(agent, state, actions);
             const execute = Execute(state, apis);
         
             init();
             loop(update, execute);
+        },
+
+        emit (name, data, ...args) {
+            state.addEvent(name, data, ...args);
         }
     }
 }

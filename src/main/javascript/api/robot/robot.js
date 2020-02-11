@@ -19,4 +19,6 @@ proxy.loadImpl = (name) => {
     });
 }
 
+proxy.loadImpl('mock');
+
 export default proxy;

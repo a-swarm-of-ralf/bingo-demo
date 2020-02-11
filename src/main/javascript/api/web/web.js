@@ -9,9 +9,21 @@ export default {
         this.name = name;
     },
 
-    show (key) {
+    setEmitter (emitter) {
+        this.emitter = emitter;
+    },
+
+    showPage (key, pairs) {
         this.$router.push(`/agent-${this.name}-${key}`); 
+        this.emitter.emit('web.update', pairs);
         return Promise.resolve(`/agent-${this.name}-${key}`);
+    },
+
+    updatePage (pairs) {
+        console.log(`[web] updatePage ("${pairs.message}")`)
+        this.emitter.emit('web.update', pairs);   
+        console.log(`[web] page updated ("${pairs.message}")`)
+        return Promise.resolve(`/agent-${this.name}`);
     },
 
     log (...args) {

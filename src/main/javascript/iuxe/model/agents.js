@@ -5,7 +5,7 @@ import web from '../../api/web/web.js'
 
 
 const emitter = new EventEmitter2();
-const runner = Runner(emitter, { robot, player, web});
+const runner = Runner(emitter, { robot, player, web });
 const agents = {};
 
 
@@ -54,4 +54,13 @@ export default {
     run (name) {
         return this.agent(name).then(runAgent)
     },
+
+    emit (name, data, ...args) {
+        runner.emit(name, data, ...args)
+    },
+
+    on (event, callback) {
+        console.log(`[Agents] on ('${event}', callback)`)
+        emitter.on(event, callback);
+    }
 }

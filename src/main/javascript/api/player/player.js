@@ -10,4 +10,6 @@ proxy.loadImpl = (name) => {
     _(impl).keys().forEach(key => proxy[key] = (...args) => impl[key](...args));
 }
 
+proxy.loadImpl('mock');
+
 export default proxy;
