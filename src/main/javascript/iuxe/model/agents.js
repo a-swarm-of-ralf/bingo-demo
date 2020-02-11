@@ -1,9 +1,23 @@
+import Runner from './agent-runner.js'
+import robot from '../../api/robot/robot.js'
+import player from '../../api/player/player.js'
+import web from '../../api/web/web.js'
+
+
+const emitter = new EventEmitter2();
+const runner = Runner(emitter, { robot, player, web});
 const agents = {};
+
+
+const runAgent = function (agent) {
+    runner.run(agent);
+}
+
 
 export default {
 
     register (name, agent) {
-        console.log(`[Agents] Registering ${name}...`)
+        console.log(`[Agents] Registering "${name}" as ${agent}...`)
         agents[name] = agent;
         return agent;
     },
@@ -13,13 +27,11 @@ export default {
     },
 
     agent (name) {
-        console.log(`[Agents] Getting agent "${name}"...`)
-        const a = agents[name];
-        if (a) {
-            return Promise.resolve(a);
-        } else {
-            return Promise.reject({ code: 'agent-not-found', message: `Agent ${name} not found.`});
-        }
+        return new Promise((resolve, reject) => {
+            console.log(`[Agents] Getting agent "${name}"...`)
+            if (agents[name]) { return resolve(agents[name]) };
+            return reject({ code: 'agent-not-found', message: `Agent ${name} not found.`});
+        })
     },
 
     names () {
@@ -37,6 +49,9 @@ export default {
 
     navigate (name, key) {
         return this.$router.push(`/agent-${name}-${key}`);  
-    }
+    },
 
+    run (name) {
+        return this.agent(name).then(runAgent)
+    },
 }

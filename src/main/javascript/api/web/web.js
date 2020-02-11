@@ -12,6 +12,10 @@ export default {
     show (key) {
         this.$router.push(`/agent-${this.name}-${key}`); 
         return Promise.resolve(`/agent-${this.name}-${key}`);
+    },
+
+    log (...args) {
+        console.log(...args);
     }
 
 }

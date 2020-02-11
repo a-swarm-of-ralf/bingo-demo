@@ -8,12 +8,12 @@ import uiAgentLoad from './ui-components/ui-agent-load.js'
 
 /* load agents */
 import bingo from './iuxe/model/agents/bingo/agent.js'
+import test from './iuxe/model/agents/test/agent.js'
 
 /* Register Agents */
 import agents from './iuxe/model/agents.js'
 agents.register('bingo', bingo);
-
-console.log('Bingo routes:', agents.routes())
+agents.register('test', test);
 
 
 export default _.concat(agents.routes() ,[

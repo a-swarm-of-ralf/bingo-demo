@@ -10,9 +10,9 @@ export default {
             return this.load("bingo");
         },
 
-        load (name) {
+        run (name) {
             console.log(`[UI-Agent-Load] Loading agent "${name}"`)
-            this.$store.dispatch('AgentLoad', name);  
+            agents.run(name);
         }
 
     },
@@ -41,7 +41,8 @@ export default {
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" @click="next" >Next</v-btn>
+                <v-btn color="primary" @click="run('test')" >Run Test</v-btn>
+                <v-btn color="primary" @click="run('bingo')" >Run Bingo</v-btn>
               </v-card-actions>
             </v-card>
     `
