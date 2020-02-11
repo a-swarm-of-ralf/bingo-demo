@@ -1,6 +1,3 @@
-import model from '../iuxe/model/index.js'
-
-
 export default {
     data: () => ({ 
         sheetVisible: true
