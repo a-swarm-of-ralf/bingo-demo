@@ -56,6 +56,9 @@ export default {
     },
 
     emit (name, data, ...args) {
+        data = data || '';
+        args = args || [];
+        console.log(`[Agents] emit("${name}", "${data}", ${_.chain(args).map(i => `"${i}"`).join(args, ', ').value()})`)
         runner.emit(name, data, ...args)
     },
 

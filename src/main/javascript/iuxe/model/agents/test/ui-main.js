@@ -1,36 +1,33 @@
-import agents from '../../agents.js'
-
 export default {
 
-    data: () => ({
-        message: 'Hello there!'
-    }),
+    computed: {
+        ...Vuex.mapGetters([ 
+            'AgentName', 
+            'AgentOntology', 
+            'AgentRunning'
+        ]),
+    },
 
     methods: {
-        
-        emit (name) {
-            agents.emit(name, {});
-        }
-    },
-    
-    created () {
-        agents.on('web.update', (pairs) => { 
-            console.log(`[ui-main] web.update ("${pairs.message}")`)
-            this.message = pairs.message; 
-        })    
+
+        ...Vuex.mapActions([ 
+            'agentRun', 
+            'agentEmit', 
+        ]),
+
     },
 
     template: `
     <v-card class="elevation-12">
-        <v-toolbar color="primary" dark flat><v-toolbar-title>Test</v-toolbar-title></v-toolbar>
+        <v-toolbar color="primary" dark flat><v-toolbar-title>Agent {{AgentName}}</v-toolbar-title></v-toolbar>
         <v-card-text>
             <p>
-                {{message}}
+                {{AgentOntology.message}}
             </p>
             <v-card-actions>
-                <v-btn color="secondary" @click="emit('clicked/left')">Left</v-btn>
+                <v-btn color="secondary" @click="agentEmit('clicked/left')">Left</v-btn>
                 <v-spacer />
-                <v-btn color="primary" @click="emit('clicked/right')">Right</v-btn>
+                <v-btn color="primary" @click="agentEmit('clicked/right')">Right</v-btn>
               </v-card-actions>
         </v-card-text>
     </v-card>

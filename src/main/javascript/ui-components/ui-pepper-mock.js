@@ -1,6 +1,6 @@
 export default {
     data: () => ({ 
-        sheetVisible: true
+        sheetVisible: false
     }),
 
     computed: {

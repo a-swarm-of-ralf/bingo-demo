@@ -9,22 +9,25 @@ export default {
         main: uiMain
     },
 
-    initialize({ web }) {
+    initialize({ web, ontology }) {
+        ontology.set('message', 'Agent "test" loaded!');
         web.showPage('main', { });
     },
 
-    update({ web }, { name, data, args }) {
+    update({ web, ontology }, { name, data, args }) {
         
         if (name === 'web/page_shown') {
             console.log(`Now showing page '${args[0]}'...`)
         }
 
         if (name === 'clicked/left') {
-            web.updatePage({ message: 'Hey you clicked left ...'})
+            ontology.set('message', 'Hey you clicked left ...');
+            // web.updatePage({ message: 'Hey you clicked left ...'})
         }
 
         if (name === 'clicked/right') {
-            web.updatePage({ message: 'Hey you clicked right ...'})
+            ontology.set('message', 'Hey you clicked right ...');
+            // web.updatePage({ message: 'Hey you clicked right ...'})
         }
     }
 

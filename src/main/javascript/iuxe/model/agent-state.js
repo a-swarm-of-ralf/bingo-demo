@@ -12,13 +12,13 @@ export default function (emitter) {
 
         set(path, value) {
             const result = _.set(ontology, path, value);
-            emitter.emit('ontology_changed', path, value, ontology);
+            emitter.emit('ontology.changed', ontology);
             return result
         },
 
         unset(path) {
             const result = _.unset(tontology, path);
-            emitter.emit('ontology_changed', path, undefined, ontology);
+            emitter.emit('ontology.changed', ontology);
             return result;
         },
 
@@ -27,6 +27,7 @@ export default function (emitter) {
         },
 
         addEvent(name, data, ...args) {
+            console.log(`[Agent-State] addEvent("${name}", "${data}", ${_.chain(args).map(i => `"${i}"`).join(args, ', ').value()})`)
             const event = { id: _.uniqueId(), name, data, args };
             eventQueue.push(event);
             emitter.emit('event_added', event, eventQueue);

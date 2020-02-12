@@ -1,19 +1,20 @@
-import agents from '../iuxe/model/agents.js'
-
 export default {
     data: () => ({ }),
 
+    computed: {
+        ...Vuex.mapGetters([ 
+            'AgentName', 
+            'AgentOntology', 
+            'AgentRunning'
+        ]),
+    },
+
     methods: {
 
-        next () {
-            console.log(`[UI-Agent-Load] Loading agent bingo`)
-            return this.load("bingo");
-        },
-
-        run (name) {
-            console.log(`[UI-Agent-Load] Loading agent "${name}"`)
-            agents.run(name);
-        }
+        ...Vuex.mapActions([ 
+            'agentRun', 
+            'agentEmit', 
+        ]),
 
     },
 
@@ -41,8 +42,8 @@ export default {
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" @click="run('test')" >Run Test</v-btn>
-                <v-btn color="primary" @click="run('bingo')" >Run Bingo</v-btn>
+                <v-btn color="primary" @click="agentRun('test')" >Run Test</v-btn>
+                <v-btn color="primary" @click="agentRun('bingo')" >Run Bingo</v-btn>
               </v-card-actions>
             </v-card>
     `
