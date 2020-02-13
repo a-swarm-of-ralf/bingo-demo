@@ -1,6 +1,11 @@
 import player from '../../api/player/player.js'
 
 
+const timestamp = function () {
+    return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
+}
+
+
 export default {
     
     state: { 
@@ -14,15 +19,24 @@ export default {
         access_token: '',
         token_type: '',
         expires_in: 0,
+        expires_at: 0,
         
         clientId: '3848d012f506457997ebde1cb526ebcf',
         scope: 'user-follow-modify user-follow-read user-library-read user-top-read ' +
             'user-read-email user-read-private playlist-read-private playlist-read-collaborative ' +
             'user-modify-playback-state user-read-playback-state user-read-recently-played user-read-currently-playing ',
-        redirect_uri: `http://localhost:8080/`,
+        redirect_uri: `http://${window.location.host}${window.location.pathname}`,
     },
 
     getters: {
+
+        PlayerConnected (state) {
+            return !!state.access_token; 
+        },
+
+        PlayerNotExpired (state) {
+            return state.access_token && expires_at <= timestamp()
+        },
 
         authorizationUrl (state) {
             return `https://accounts.spotify.com/authorize?client_id=${state.clientId}&` + 
@@ -53,6 +67,7 @@ export default {
             state.access_token = access_token;
             state.token_type = token_type;
             state.expires_in = expires_in;
+            state.expires_at = timestamp() + (parseInt(expires_in) * 1000);
         },
 
         authorizedUser (state, user) {

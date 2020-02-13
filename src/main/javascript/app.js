@@ -1,10 +1,14 @@
 import uiPepperMock from './ui-components/ui-pepper-mock.js'
+import uiFloatRobot from './ui-components/ui-float-robot.js'
+import uiFloatPlayer from './ui-components/ui-float-player.js'
 import routes from './routes.js'
 import store from './store.js'
 import web from './api/web/web.js'
 
 
 Vue.component('ui-pepper-mock', uiPepperMock)
+Vue.component('ui-float-robot', uiFloatRobot)
+Vue.component('ui-float-player', uiFloatPlayer)
 
 const router = new VueRouter({ routes })
 
