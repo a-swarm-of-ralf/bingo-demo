@@ -2,6 +2,10 @@ export default function (state) {
 
     return {
 
+        call (mod, method, data, event, ...args) {
+            return state.addAction(event, 'robot', 'call', data, mod, method, ...args); 
+        },
+
         /*
          * Event subscriptions
          */

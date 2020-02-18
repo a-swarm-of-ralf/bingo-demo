@@ -26,6 +26,13 @@ export default {
         return Promise.resolve(`/agent-${this.name}`);
     },
 
+    timeout (time_in_ms) {
+        console.log(`[web] timeout ("${time_in_ms}")`)
+        return new Promise((resolve, reject) => {
+            setTimeout(resolve, time_in_ms)
+        });
+    },
+
     log (...args) {
         console.log(...args);
     }

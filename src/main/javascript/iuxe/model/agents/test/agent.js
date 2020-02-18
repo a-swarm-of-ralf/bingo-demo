@@ -16,6 +16,7 @@ export default {
 
     update({ web, ontology }, { name, data, args }) {
         
+        /// hhf
         if (name === 'web/page_shown') {
             console.log(`Now showing page '${args[0]}'...`)
         }
