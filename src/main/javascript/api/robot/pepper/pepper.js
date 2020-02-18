@@ -198,4 +198,11 @@ export default class Pepper extends EventEmitter2 {
   setVolume (v) {
     return this.call('ALAudioDevice', 'setOutputVolume', [ v ])
   }
+
+  listen (word_list) {
+    return this.call('ALSpeechRecognition', 'pause', [true])
+      .then(() => this.call('ALSpeechRecognition', 'setVocabulary', [word_list, false]))
+      .then(() => this.call('ALSpeechRecognition', 'pause', [false]))
+      .then(() => this.call('ALSpeechRecognition', 'subscribe', ['IUXE']))
+  }
 }

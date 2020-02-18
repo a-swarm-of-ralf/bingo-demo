@@ -17,6 +17,12 @@ export default function (state) {
         isSubscribed(event, data = '') { return state.addAction('robot/subscribed', 'robot', 'isSubscribed', data, event); },
         unsubscribe(event, data = '') { return state.addAction('robot/unsubscribed', 'robot', 'unsubscribe', data, event); },
         
+        listen(word_list, data='') {
+            state.addAction('robot/listening', 'robot', 'listen', data, word_list);
+            state.addAction('robot/subscribed', 'robot', 'subscribe', data, 'WordRecognized', 
+                (...args) => { state.addEvent(`robot/WordRecognized`, data, ...args) }); 
+        },
+
         /*
          * Behavior methods
          */
