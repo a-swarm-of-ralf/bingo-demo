@@ -9,7 +9,7 @@ export default function injectScript(src, emitter) {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
         script.async = true;
-        script.src = src;
+        script.src = `http://${src}:80/libs/qi/2/qi.js`;
 
         script.addEventListener('load', (args) => {
             resolve();

@@ -6,6 +6,7 @@ const implementations = { mock, pepper }
 const proxy = {} ;
 
 proxy.loadImpl = (name) => {
+    console.log(`[ROBOT] loading robot impl "${name}"...`)
     const impl = implementations[name];
     impl.beforeLoading();
     _(impl).keys().forEach(key => {

@@ -27,7 +27,7 @@ export default {
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" to="app-load" >Next</v-btn>
+                <v-btn color="primary" to="agent-load" >Next</v-btn>
               </v-card-actions>
             </v-card>
     `

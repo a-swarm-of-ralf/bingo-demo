@@ -9,9 +9,10 @@ export default {
         main: uiMain
     },
 
-    initialize({ web, ontology }) {
+    initialize({ robot, web, ontology }) {
         ontology.set('message', 'Agent "test" loaded!');
         web.showPage('main', { });
+        robot.say("Hello, starting agent now");
     },
 
     update({ web, ontology }, { name, data, args }) {

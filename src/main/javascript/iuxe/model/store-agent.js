@@ -7,6 +7,7 @@ export default {
         name: '',
         running: false,
         ontology: {},
+        list: [],
     },
 
     getters: {
@@ -21,6 +22,10 @@ export default {
 
         AgentRunning(state) {
             return state.running
+        },
+
+        AgentList(state) {
+            return state.list;
         },
 
     },
@@ -38,6 +43,10 @@ export default {
         updateAgentOntology(state, ontology) {
             Vue.set(state, 'ontology', ontology);
         },
+
+        updateAgentList(state) {
+            state.agents = agents.names();    
+        }
     },
 
     actions: {

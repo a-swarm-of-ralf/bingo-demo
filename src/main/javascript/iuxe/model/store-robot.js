@@ -8,7 +8,7 @@ export default {
     connectionState: 0,  // 0 initial value, 1 trying, 2 failed, 3 success
 
     ipAddress: 'pepper.local',
-    ipAddressHistory: ['pepper.local', '192.168.188.28']
+    ipAddressHistory: ['pepper.local', '192.168.188.28', '192.168.100.166']
   },
 
   getters: {
@@ -55,6 +55,7 @@ export default {
       robot.loadImpl('pepper');
       robot.on('injected', bool => commit('updateRobotInjected', bool))
       robot.on('connected', bool => commit('updateRobotConnected', bool))
+      console.log(`[StoreRobot] conencting to ip ${state.ipAddress}...`)
       return robot.connect(state.ipAddress)
     },
 
