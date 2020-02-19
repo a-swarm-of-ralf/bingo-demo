@@ -41,7 +41,7 @@ export default {
         },
 
         updateAgentOntology(state, ontology) {
-            Vue.set(state, 'ontology', ontology);
+            state.ontology = _.clone(ontology);
         },
 
         updateAgentList(state) {

@@ -130,7 +130,8 @@ export default {
      * See: https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/
      */
     playTrack (uri) {
-        return this.put(`/me/player/play`, { uris: [uri] });
+        console.log(`[SPOTIFY] playTrack('${uri}')`);
+        return this.put(`/me/player/play`, { "uris": [uri] });
     },
 
     /**
