@@ -7,7 +7,7 @@ export default {
         name: '',
         running: false,
         ontology: {},
-        list: [],
+        list: [ 'test' ],
     },
 
     getters: {
@@ -45,7 +45,8 @@ export default {
         },
 
         updateAgentList(state) {
-            state.agents = agents.names();    
+            console.log('[StoreAgent] updating agent list', agents.names())
+            state.list = agents.names();    
         }
     },
 

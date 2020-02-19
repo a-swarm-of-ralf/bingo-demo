@@ -5,7 +5,8 @@ export default {
         ...Vuex.mapGetters([ 
             'AgentName', 
             'AgentOntology', 
-            'AgentRunning'
+            'AgentRunning',
+            'AgentList'
         ]),
     },
 
@@ -28,23 +29,21 @@ export default {
             <v-toolbar-title>Load Agent</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
-                <p>
-                    So 
-                </p>
-                <p>
-                    Having both spotify and Pepper, it is now time to do something with it. We can 
-                    run soming called an app to perfom perform teh actual logic of doing things. An
-                    application is basicly a continues loop consiting of three steps.
-                </p>
-                <p>
-                    Curently there is only one app, the bingo app. You can press next to load this app.
-                </p>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-                <v-btn color="primary" @click="agentRun('test')" >Run Test</v-btn>
-                <v-btn color="primary" @click="agentRun('bingo')" >Run Bingo</v-btn>
-              </v-card-actions>
+                Select one of the following agents to run.
+            </v-card-text>
+            <v-list>
+                <v-list-item v-for="item in AgentList" :key="item" @click="agentRun(item)">
+
+                <v-list-item-content>
+                    <v-list-item-title v-text="item"></v-list-item-title>
+                </v-list-item-content>
+
+                <v-list-item-icon>
+                    <v-icon v-if="item ===  AgentName" >fas fa-stop-circle</v-icon>
+                    <v-icon v-if="item !==  AgentName" >fas fa-play-circle</v-icon>
+                </v-list-item-icon>
+                </v-list-item>
+            </v-list>
             </v-card>
     `
 }

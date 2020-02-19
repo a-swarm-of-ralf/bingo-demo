@@ -26,6 +26,7 @@ const app = {
 
     update({ web, ontology, player, robot }, { name, data, args }) {
         console.log(`[BINGO] update("${name}", "${data}", ${_.chain(args).map(i => `"${i}"`).join(args, ', ').value()})`);
+        
         ontology.set('message', `event "${name}" with data "${data}"`);
 
         if (name === 'bingo/seed-select') { web.showPage('seed', {}); }
@@ -35,7 +36,8 @@ const app = {
         if (name === 'player/playlists' && data === 'generating-cards') { 
             console.log('[BINGO] playlists', args[0].items);
             ontology.set('playlists', args[0].items);
-            web.showPage('playlists', {}); }
+            web.showPage('playlists', {}); 
+        }
         
         if (name === 'bingo/playlist-selected') { 
             console.log(`[BINGO] playlist-selected`, args[0]);
