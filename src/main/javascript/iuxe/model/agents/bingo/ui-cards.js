@@ -50,7 +50,7 @@ export default {
         </v-container>
         <v-card-actions>
             <v-spacer />
-            <v-btn color="primary" @click="agentEmit('bingo/generated')">Accept and Play</v-btn>
+            <v-btn color="primary" @click="agentEmit('bingo/start')">Accept and Play</v-btn>
         </v-card-actions>
     </v-card>
     `
