@@ -44,3 +44,23 @@ export default {
 }
 ```
 
+The final step is to register the agent. In the ```/src/main/javascript/routes.js``` file there is 
+a section that looks something like below:
+```javascript
+/* Register Agents */
+import agents from './iuxe/model/agents.js'
+agents.register('bingo', bingo);
+agents.register('test', test);
+```
+
+Here we add our my_agent agent:
+```javascript
+/* Register Agents */
+import agents from './iuxe/model/agents.js'
+import myAgent from './iuxe/model/agents/my_agent/agent.js'
+agents.register('bingo', bingo);
+agents.register('test', test);
+agents.register('my_agent', myAgent);
+```
+
+Note the second and the last line.
