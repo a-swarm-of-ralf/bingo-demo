@@ -30,4 +30,17 @@ mkdir /src/main/javascript/iuxe/model/agents/my_agent
 touch /src/main/javascript/iuxe/model/agents/my_agent/agent.js
 ```
 
+An agent itself is a simple javascript object with two fields and two functions. below shows a minimal code for the my_agent agent we created above.
+```javascript
+export default {
+    name: "my_agent",
+    ui: { },
+    initialize(actions) { 
+
+    },
+    update(actions, event) {
+
+    }
+}
+```
 
