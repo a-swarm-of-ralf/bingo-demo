@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="./src/main/css/roboto.css" rel="stylesheet">
+    <link href="./src/main/css/fontawesome-5.0.13.css" rel="stylesheet">
+    <link href="./src/main/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="./src/main/css/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <v-app-bar absolute dense color="primary">
+              <v-toolbar-title>Music Bingo</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn icon to="spotify-login"><v-icon>fab fa-spotify</v-icon></v-btn>
+              <v-btn icon to="pepper-connect"><v-icon>fas fa-robot</v-icon></v-btn>
+              <v-btn icon to="agent-load"><v-icon>fas fa-gamepad</v-icon></v-btn>
+            </v-app-bar>
+            <v-content>
+              <v-container
+                class="fill-height"
+                fluid
+              >
+                <v-row
+                  align="center"
+                  justify="center"
+                >
+                  <v-col
+                    cols="12"
+                    sm="8"
+                    md="4"
+                  >
+                    <router-view></router-view>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-content>
+            <ui-float-robot></ui-float-robot>
+            <ui-float-player></ui-float-player>
+            <ui-pepper-mock></ui-pepper-mock>
+          </v-app>
+    </div>
+
+    <script src="./src/main/javascript/lib/vue.js"></script>
+    <script src="./src/main/javascript/lib/vue-router.js"></script>
+    <script src="./src/main/javascript/lib/vuex.js"></script>
+    <script src="./src/main/javascript/lib/vuetify.js"></script>
+    <script src="./src/main/javascript/lib/lodash.js"></script>
+    <script src="./src/main/javascript/lib/eventemitter2.js"></script>
+    <script src="./src/main/javascript/lib/localForage.min.js"></script>
+    <script src="./src/main/javascript/lib/axios.min.js"></script>
+    <script src="./src/main/javascript/lib/fpsmeter.js"></script>
+    <script nomodule src="./src/main/javascript/lib/babel-browser-build.js"></script>
+    <script nomodule src="./src/main/javascript/lib/browser-es-module-loader"></script>
+    <script type="module" src="./src/main/javascript/app.js"></script>
+
+</body>
+
+</html>
