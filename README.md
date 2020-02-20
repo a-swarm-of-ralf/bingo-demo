@@ -23,4 +23,11 @@ Point your browser to http://localhost:8080/. Follow the step on screen to setup
 
 Agents are located in ```/src/main/javascript/iuxe/model/agents/```. To create an agent create a folder with the name of your agent and add a file name ```agent.js``` in it.
 
+For create an agent named my_agent we could:
+
+```bash
+mkdir /src/main/javascript/iuxe/model/agents/my_agent
+touch /src/main/javascript/iuxe/model/agents/my_agent/agent.js
+```
+
 
