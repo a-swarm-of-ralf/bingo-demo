@@ -4,6 +4,8 @@ The Bingo Demo is an example application that construct an agent interfacing wit
 
 It is build fully in Javascript and makes full use of ES6 features like modules. As a consequence it only runs on browsers supporting this.
 
+Demo [here](https://a-swarm-of-ralf.github.io/bingo-demo/).
+
 ## Installing
 
 ```
