@@ -35,6 +35,10 @@ export default {
 
     log (...args) {
         console.log(...args);
+    },
+
+    ajax (...args) {
+        return axios(...args);
     }
 
 }
