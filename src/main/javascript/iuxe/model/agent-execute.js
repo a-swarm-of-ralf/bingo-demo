@@ -2,7 +2,7 @@ import F from './agent-functions.js'
 
 
 const executor = function (apis, callback, { api, method, args, event, data }) {
-    console.log(`Executor calling ${api}.${method}(...)`);
+    console.log(`[AgentExecute] Executor calling ${api}.${method}(...)`);
     const exec = F.promisefy(_.bindKey(apis[api], method));
     exec(...args)
         .then((...results) => callback(event, data, ...results))

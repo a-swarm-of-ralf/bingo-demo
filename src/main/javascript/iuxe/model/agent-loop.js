@@ -8,6 +8,7 @@ const timestamp = function () {
 
 let now;
 let dt;
+let after;
 let last = timestamp();
 const step = 1/60;
 
@@ -24,6 +25,12 @@ const frame = function () {
     while(dt > step) {
         dt = dt - step;
         reason(step);
+    }
+
+    after = timestamp();
+
+    if (after - now > 1000) {
+        console.warn(`[WARN][AgentLoop] agent update took ${(now - last) / 1000} seconds. That is probably too long.`);
     }
 
     execute(dt);

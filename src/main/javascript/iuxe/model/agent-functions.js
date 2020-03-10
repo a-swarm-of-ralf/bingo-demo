@@ -10,8 +10,9 @@ export default {
 
         return (...args) => {
             let item = prod();
-            
+            console.log(`[PROCESSOR] produce ${JSON.stringify(item)}`);
             while (item && !_.isError(item)) {
+                console.log(`[PROCESSOR] iterate ${JSON.stringify(item)}`);
                 iter(item, ...args);
                 item = prod();
             }
